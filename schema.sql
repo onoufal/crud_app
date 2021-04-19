@@ -1,4 +1,4 @@
-CREATE TABLE IF EXISTS characters;
+DROP TABLE IF EXISTS characters;
 
 CREATE TABLE characters (
   id SERIAL PRIMARY KEY,
