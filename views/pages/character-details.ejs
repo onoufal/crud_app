@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header><%- include('../layout/header') %></header>
+    <main>
+      <% characterInfo.forEach(character => { %>
+      <p>Name: <%= character.name %></p>
+      <p>House: <%= character.house %></p>
+      <p>Patronus: <%= character.patronus %></p>
+      <p>Alive: <%= character.is_alive %></p>
+      <form
+        action="/update-character/<%= character.id %>?_method=PUT"
+        method="POST"
+      >
+        <input type="text" name="name" value="<%= character.name %>" />
+        <input type="text" name="house" value="<%= character.house %>" />
+        <input type="text" name="patronus" value="<%= character.patronus %>" />
+        <select name="alive">
+          <% if (character.is_alive) { %>
+          <option value="t">Alive</option>
+          <option value="f">Dead</option>
+          <% } else { %>
+          <option value="f">Dead</option>
+          <option value="t">Alive</option>
+          <% } %>
+        </select>
+        <input type="submit" value="Update" />
+      </form>
+      <form action="/delete/<%= character.id %>?_method=DELETE" method="POST">
+        <input type="submit" value="Delete" />
+      </form>
+
+      <% }) %>
+    </main>
+  </body>
+</html>

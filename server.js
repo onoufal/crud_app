@@ -61,6 +61,38 @@ app.get('/character/my-fav-characters', (req, res) => {
   });
 });
 
+//details character
+app.get('/characters/:character_id', (req, res) => {
+  const characterId = req.params.character_id;
+  const sql = `SELECT * FROM characters WHERE id=$1`;
+  const values = [characterId];
+  client.query(sql, values).then((results) => {
+    res.render('./pages/character-details', { characterInfo: results.rows });
+    // console.log(results.rows);
+  });
+});
+
+//update
+app.put('/update-character/:char_id', (req, res) => {
+  const charId = req.params.char_id;
+  const { name, house, patronus, alive } = req.body;
+  const sql = `UPDATE characters SET name=$1, house=$2, patronus=$3, is_alive=$4 WHERE id=$5;`;
+  const values = [name, house, patronus, alive, charId];
+  client.query(sql, values).then(() => {
+    res.redirect(`/characters/${charId}`);
+  });
+});
+
+//delete
+app.delete('/delete/:char_id', (req, res) => {
+  const charId = req.params.char_id;
+  const sql = `DELETE FROM characters WHERE id=$1;`;
+  const values = [charId];
+  client.query(sql, values).then(() => {
+    res.redirect('/character/my-fav-characters');
+  });
+});
+
 app.get('*', (req, res) => {
   res.status(404).send('This route does exist');
 });
