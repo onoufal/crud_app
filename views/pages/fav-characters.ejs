@@ -7,12 +7,14 @@
     <title>Document</title>
   </head>
   <body>
+    <header><%- include('../layout/header') %></header>
     <main>
       <% favCharacters.forEach(character => { %>
       <p>Name: <%= character.name %></p>
       <p>House: <%= character.house %></p>
       <p>Patronus: <%= character.patronus %></p>
       <p>Alive: <%= character.is_alive %></p>
+      <a href="/characters/<%= character.id %>">View Details</a>
       <hr />
       <% }) %>
     </main>
